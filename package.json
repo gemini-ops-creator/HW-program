@@ -1,8 +1,8 @@
 {
-  "name": "react-list-app",
+  "name": "react-app",
   "private": true,
   "version": "1.0.0",
-  "description": "React Homework - Homework #1: React List Component application created with Vite",
+  "description": "React Homeworks",
   "author": "Dasha Shamraeva",
   "keywords": [
     "react",
