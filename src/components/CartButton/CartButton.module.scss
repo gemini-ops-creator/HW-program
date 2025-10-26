@@ -1,0 +1,52 @@
+.cartButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  background-color: var(--button-primary-bg);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    transform 0.48s ease,
+    background-color 0.3s ease;
+  position: relative;
+
+  &:hover {
+    transform: scale(1.09);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #2a9196;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 768px) {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+.cartIcon {
+  width: 24px;
+  height: 16px;
+  fill: #fff;
+}
+
+.cartCounter {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  background-color: #fff;
+  color: var(--button-primary-bg);
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 50%;
+  box-shadow: 0 0 3px 1px rgba(53, 184, 190, 0.52);
+}
