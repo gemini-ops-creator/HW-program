@@ -1,3 +1,5 @@
+@import url("./styles/typography.css");
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -6,6 +8,13 @@
   color-scheme: light;
   color: #213547;
   background-color: #ffffff;
+
+  /* Button color variables */
+  --button-primary-bg: #35b8be;
+  --button-primary-color: #fff;
+  --button-border-color: rgba(95, 112, 130, 0.21);
+  --button-disabled-color: #232323;
+  --button-disabled-bg: transparent;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
