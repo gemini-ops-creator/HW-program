@@ -1,14 +1,17 @@
 import React from "react";
-import Header from "../components/Header/Header.jsx";
-import Footer from "../components/Footer/Footer.jsx";
-import Button from "../components/Button/Button.jsx";
+import Header from "../../components/Header/Header.jsx";
+import Footer from "../../components/Footer/Footer.jsx";
+import Button from "../../components/Button/Button.jsx";
 import styles from "./HomePage.module.css";
 
-import bgShape from "../assets/background/BG_Shape.png";
-import heroImage from "../assets/background/home.png";
-import trustpilotImage from "../assets/background/trustpilot.svg";
+import bgShape from "../../assets/background/BG_Shape.png";
+import heroImage from "../../assets/background/home.png";
+import trustpilotImage from "../../assets/background/trustpilot.svg";
+import { useAppContext } from "../../context/AppContext.jsx";
 
 function HomePage() {
+  const { setCurrentPage } = useAppContext();
+
   return (
     <div className={styles.homeContainer}>
       <Header />
@@ -32,7 +35,9 @@ function HomePage() {
               ever since the 1500.
             </p>
             <div className={styles.actionArea}>
-              <Button>Place an Order</Button>
+              <Button onClick={() => setCurrentPage && setCurrentPage("menu")}>
+                Place an Order
+              </Button>
             </div>
             <div className={styles.ratingArea}>
               <img

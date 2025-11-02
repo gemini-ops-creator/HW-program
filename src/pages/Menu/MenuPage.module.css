@@ -1,0 +1,151 @@
+.menuPageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.menuSection {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.menuContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}
+
+.menuHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.menuHeader h1 {
+  color: #35b8be;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 55px;
+  letter-spacing: 1.65px;
+  margin-bottom: 1rem;
+  width: 442px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.menuHeader::after {
+  content: "";
+  display: none;
+}
+
+.menuSubtitle {
+  width: 466px;
+  height: 54px;
+  color: #546285;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 27px;
+  letter-spacing: 0.36px;
+  margin: 0 auto;
+  margin-top: 0.5rem;
+}
+
+.menuSubtitle .phone {
+  color: #35b8be;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 27px;
+  letter-spacing: 0.36px;
+}
+
+.categoryNav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.menuGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 580px);
+  gap: 32px;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  margin: 2rem 0;
+}
+
+.error {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #d32f2f;
+  margin: 2rem 0;
+  padding: 1rem;
+  background-color: #ffebee;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .menuGrid {
+    grid-template-columns: 1fr;
+    max-width: 580px;
+    margin: 0 auto 3rem auto;
+  }
+
+  .menuHeader h1 {
+    font-size: 40px;
+    line-height: 45px;
+    width: 100%;
+  }
+
+  .menuSubtitle {
+    width: 100%;
+    height: auto;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .menuContainer {
+    padding: 1rem;
+  }
+
+  .menuGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .menuHeader h1 {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .categoryNav {
+    gap: 0.5rem;
+  }
+}

@@ -23,9 +23,9 @@ const footerLinksConfig = [
   {
     title: "TEMPLATE",
     links: [
-      { text: "Style Guide", href: "#", disabled: false },
-      { text: "Changelog", href: "#", disabled: false },
-      { text: "License", href: "#", disabled: false },
+      { text: "Style Guide", href: "https://www.google.com", disabled: false },
+      { text: "Changelog", href: "https://www.google.com", disabled: false },
+      { text: "License", href: "https://www.google.com", disabled: false },
     ],
   },
 ];
