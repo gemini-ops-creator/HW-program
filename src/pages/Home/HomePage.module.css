@@ -134,7 +134,6 @@
   max-height: 500px;
 }
 
-/* Mobile responsive */
 @media (max-width: 800px) {
   .heroBanner {
     flex-direction: column;
