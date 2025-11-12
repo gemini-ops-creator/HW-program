@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useMemo,
+  useCallback,
+} from "react";
 
 const AppContext = createContext(null);
 
@@ -7,7 +13,7 @@ export function AppProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const addToCart = (item, quantity = 1) => {
+  const addToCart = useCallback((item, quantity = 1) => {
     setCart(prev => {
       const existing = prev.find(i => i.id === item.id);
       if (existing) {
@@ -17,18 +23,21 @@ export function AppProvider({ children }) {
       }
       return [...prev, { ...item, quantity }];
     });
-  };
+  }, []);
 
-  const toggleCart = () => setIsCartOpen(s => !s);
+  const toggleCart = useCallback(() => setIsCartOpen(s => !s), []);
 
-  const value = {
-    currentPage,
-    setCurrentPage,
-    cart,
-    addToCart,
-    toggleCart,
-    isCartOpen,
-  };
+  const value = useMemo(
+    () => ({
+      currentPage,
+      setCurrentPage,
+      cart,
+      addToCart,
+      toggleCart,
+      isCartOpen,
+    }),
+    [currentPage, cart, isCartOpen, addToCart, toggleCart]
+  );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
