@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 import styles from "./Button.module.scss";
 
 function Button({
@@ -10,15 +11,15 @@ function Button({
   className,
   ...rest
 }) {
-  const buttonClass = [
+  const buttonClass = clsx(
     styles.button,
-    variant === "secondary" && styles.secondary,
-    variant === "seeMore" && styles.seeMore,
-    variant === "secondary" && active && styles.active,
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+    {
+      [styles.secondary]: variant === "secondary",
+      [styles.seeMore]: variant === "seeMore",
+      [styles.active]: active && variant === "secondary",
+    },
+    className
+  );
 
   return (
     <button className={buttonClass} type={type} disabled={disabled} {...rest}>

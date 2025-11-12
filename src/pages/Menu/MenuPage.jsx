@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Card from "../../components/Card/Card.jsx";
@@ -14,15 +14,11 @@ function Menu() {
   const [displayLimit, setDisplayLimit] = useState(6);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const activeCategory = "Dessert";
+  const [activeCategory, setActiveCategory] = useState("Dessert");
 
   const { setCurrentPage } = useAppContext();
 
-  useEffect(() => {
-    fetchMeals();
-  }, []);
-
-  const fetchMeals = async () => {
+  const fetchMeals = useCallback(async () => {
     try {
       setLoading(true);
       const data = await ApiService.getMeals();
@@ -33,47 +29,17 @@ function Menu() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchMeals();
+  }, [fetchMeals]);
 
   const loadMoreItems = () => {
     setDisplayLimit(prev => prev + 6);
   };
 
-  const filteredMeals = meals.filter(meal => {
-    if (activeCategory === "Dessert") {
-      return (
-        meal.category === "Dessert" ||
-        meal.meal?.toLowerCase().includes("dessert") ||
-        meal.meal?.toLowerCase().includes("cake") ||
-        meal.meal?.toLowerCase().includes("ice cream") ||
-        meal.meal?.toLowerCase().includes("cookie") ||
-        meal.instructions?.toLowerCase().includes("dessert")
-      );
-    }
-    if (activeCategory === "Breakfast") {
-      return (
-        meal.category === "Breakfast" ||
-        meal.meal?.toLowerCase().includes("breakfast") ||
-        meal.meal?.toLowerCase().includes("pancake") ||
-        meal.meal?.toLowerCase().includes("cereal") ||
-        meal.meal?.toLowerCase().includes("toast") ||
-        meal.meal?.toLowerCase().includes("egg") ||
-        meal.instructions?.toLowerCase().includes("breakfast")
-      );
-    }
-    if (activeCategory === "Dinner") {
-      return (
-        meal.category === "Dinner" ||
-        meal.meal?.toLowerCase().includes("dinner") ||
-        meal.meal?.toLowerCase().includes("burger") ||
-        meal.meal?.toLowerCase().includes("pizza") ||
-        meal.meal?.toLowerCase().includes("steak") ||
-        meal.meal?.toLowerCase().includes("chicken") ||
-        meal.instructions?.toLowerCase().includes("dinner")
-      );
-    }
-    return true;
-  });
+  const filteredMeals = meals.filter(meal => meal.category === activeCategory);
 
   const displayedMeals = filteredMeals.slice(0, displayLimit);
   const hasMoreItems = displayLimit < filteredMeals.length;
@@ -101,7 +67,7 @@ function Menu() {
                   key={category}
                   variant="secondary"
                   active={activeCategory === category}
-                  disabled={true}
+                  onClick={() => setActiveCategory(category)}
                 >
                   {category}
                 </Button>
