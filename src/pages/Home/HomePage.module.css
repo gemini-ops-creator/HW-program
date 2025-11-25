@@ -65,6 +65,13 @@
   display: inline-block;
 }
 
+.actionNote {
+  margin-top: 8px;
+  color: #546285;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
 .ratingArea {
   display: flex;
   flex-direction: column;

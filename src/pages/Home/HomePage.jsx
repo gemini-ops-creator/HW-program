@@ -7,11 +7,8 @@ import styles from "./HomePage.module.css";
 import bgShape from "../../assets/background/BG_Shape.png";
 import heroImage from "../../assets/background/home.png";
 import trustpilotImage from "../../assets/background/trustpilot.svg";
-import { useAppContext } from "../../context/AppContext.jsx";
 
 function HomePage() {
-  const { setCurrentPage } = useAppContext();
-
   return (
     <div className={styles.homeContainer}>
       <Header />
@@ -35,9 +32,12 @@ function HomePage() {
               ever since the 1500.
             </p>
             <div className={styles.actionArea}>
-              <Button onClick={() => setCurrentPage && setCurrentPage("menu")}>
+              <Button disabled title="Online ordering will be available soon">
                 Place an Order
               </Button>
+              <p className={styles.actionNote}>
+                Online ordering is temporarily unavailable. Stay tuned!
+              </p>
             </div>
             <div className={styles.ratingArea}>
               <img

@@ -1,44 +1,30 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Card from "../../components/Card/Card.jsx";
 import Button from "../../components/Button/Button.jsx";
 import styles from "./MenuPage.module.css";
-import ApiService from "../../services/ApiService.js";
+import { useMealsService } from "../../services/ApiService.js";
 import { useAppContext } from "../../context/AppContext.jsx";
 
 import bgShape from "../../assets/background/BG_Shape.png";
 
 function Menu() {
-  const [meals, setMeals] = useState([]);
   const [displayLimit, setDisplayLimit] = useState(6);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [activeCategory, setActiveCategory] = useState("Dessert");
 
   const { setCurrentPage } = useAppContext();
-
-  const fetchMeals = useCallback(async () => {
-    try {
-      setLoading(true);
-      const data = await ApiService.getMeals();
-      setMeals(data);
-    } catch (err) {
-      setError("Failed to load menu items");
-      console.error("Error fetching meals:", err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const { data: mealsData, loading, error, execute } = useMealsService();
 
   useEffect(() => {
-    fetchMeals();
-  }, [fetchMeals]);
+    execute().catch(() => {});
+  }, [execute]);
 
   const loadMoreItems = () => {
     setDisplayLimit(prev => prev + 6);
   };
 
+  const meals = mealsData ?? [];
   const filteredMeals = meals.filter(meal => meal.category === activeCategory);
 
   const displayedMeals = filteredMeals.slice(0, displayLimit);
@@ -76,7 +62,11 @@ function Menu() {
           </header>
 
           {loading && <div className={styles.loading}>Loading menu...</div>}
-          {error && <div className={styles.error}>{error}</div>}
+          {error && (
+            <div className={styles.error}>
+              {error.message || "Failed to load menu items"}
+            </div>
+          )}
 
           <div className={styles.menuGrid}>
             {displayedMeals.map(meal => (
