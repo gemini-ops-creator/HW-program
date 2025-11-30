@@ -1,38 +1,24 @@
+import React from "react";
 import "./App.css";
-import ListComponent from "./components/ListComponent";
-
-const fruits = [
-  "Apple",
-  "Banana",
-  "Orange",
-  "Mango",
-  "Strawberry",
-  "Pineapple",
-  "Grapes",
-  "Watermelon",
-  "Peach",
-  "Cherry",
-];
-
-const vegetables = [
-  "Carrot",
-  "Tomato",
-  "Cucumber",
-  "Broccoli",
-  "Spinach",
-  "Bell Pepper",
-  "Onion",
-  "Potato",
-  "Lettuce",
-  "Corn",
-];
+import HomePage from "./pages/Home/HomePage.jsx";
+import Menu from "./pages/Menu/MenuPage.jsx";
+import { AppProvider, useAppContext } from "./context/AppContext.jsx";
 
 function App() {
   return (
-    <div className="App">
-      <ListComponent items={fruits} title="Fruits" />
+    <AppProvider>
+      <AppContent />
+    </AppProvider>
+  );
+}
 
-      <ListComponent items={vegetables} title="Vegetables" />
+function AppContent() {
+  const { currentPage } = useAppContext();
+
+  return (
+    <div className="App">
+      {currentPage === "home" && <HomePage />}
+      {currentPage === "menu" && <Menu />}
     </div>
   );
 }

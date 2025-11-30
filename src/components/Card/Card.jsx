@@ -1,0 +1,55 @@
+import React, { useState } from "react";
+import styles from "./Card.module.css";
+import { useAppContext } from "../../context/AppContext.jsx";
+
+function Card({ id, name, description, image, price }) {
+  const { addToCart } = useAppContext();
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAdd = () => {
+    addToCart({ id, name, price: Number(price) || 0, image }, quantity);
+  };
+
+  const handleQuantityChange = e => {
+    const value = parseInt(e.target.value) || 1;
+    if (value >= 1) {
+      setQuantity(value);
+    }
+  };
+
+  return (
+    <div className={styles.card}>
+      <div className={styles.imageContainer}>
+        {image ? (
+          <img src={image} alt={name} className={styles.cardImage} />
+        ) : (
+          <div className={styles.placeholderImage}></div>
+        )}
+      </div>
+
+      <div className={styles.cardContent}>
+        <div className={styles.cardHeader}>
+          <h3 className={styles.cardTitle}>{name}</h3>
+          <div className={styles.cardPrice}>${price}</div>
+        </div>
+
+        <p className={styles.cardDescription}>{description}</p>
+
+        <div className={styles.cardActions}>
+          <input
+            type="number"
+            min="1"
+            value={quantity}
+            onChange={handleQuantityChange}
+            className={styles.quantityInput}
+          />
+          <button onClick={handleAdd} className={styles.addButton}>
+            Add to cart
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Card;
