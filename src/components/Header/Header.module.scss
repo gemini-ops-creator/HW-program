@@ -11,6 +11,8 @@
 .logoLink {
   display: inline-flex;
   align-items: center;
+  text-decoration: none;
+  color: inherit;
 }
 
 .logoIcon {
@@ -78,6 +80,7 @@
   cursor: pointer;
   transition: color 0.22s ease;
   position: relative;
+  text-decoration: none;
 
   &:hover {
     color: var(--text-accent);
