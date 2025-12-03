@@ -9,7 +9,6 @@ import React, {
 const AppContext = createContext(null);
 
 export function AppProvider({ children }) {
-  const [currentPage, setCurrentPage] = useState("home");
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -29,14 +28,12 @@ export function AppProvider({ children }) {
 
   const value = useMemo(
     () => ({
-      currentPage,
-      setCurrentPage,
       cart,
       addToCart,
       toggleCart,
       isCartOpen,
     }),
-    [currentPage, cart, isCartOpen, addToCart, toggleCart]
+    [cart, isCartOpen, addToCart, toggleCart]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
