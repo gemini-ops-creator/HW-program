@@ -3,12 +3,15 @@ import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Button from "../../components/Button/Button.jsx";
 import styles from "./HomePage.module.css";
+import { useNavigate } from "react-router-dom";
 
 import bgShape from "../../assets/background/BG_Shape.png";
 import heroImage from "../../assets/background/home.png";
 import trustpilotImage from "../../assets/background/trustpilot.svg";
 
 function HomePage() {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.homeContainer}>
       <Header />
@@ -32,12 +35,7 @@ function HomePage() {
               ever since the 1500.
             </p>
             <div className={styles.actionArea}>
-              <Button disabled title="Online ordering will be available soon">
-                Place an Order
-              </Button>
-              <p className={styles.actionNote}>
-                Online ordering is temporarily unavailable. Stay tuned!
-              </p>
+              <Button onClick={() => navigate("/order")}>Place an Order</Button>
             </div>
             <div className={styles.ratingArea}>
               <img

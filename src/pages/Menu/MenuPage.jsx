@@ -5,7 +5,7 @@ import Card from "../../components/Card/Card.jsx";
 import Button from "../../components/Button/Button.jsx";
 import styles from "./MenuPage.module.css";
 import { useMealsService } from "../../services/ApiService.js";
-import { useAppContext } from "../../context/AppContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 import bgShape from "../../assets/background/BG_Shape.png";
 
@@ -13,8 +13,8 @@ function Menu() {
   const [displayLimit, setDisplayLimit] = useState(6);
   const [activeCategory, setActiveCategory] = useState("Dessert");
 
-  const { setCurrentPage } = useAppContext();
   const { data: mealsData, loading, error, execute } = useMealsService();
+  const navigate = useNavigate();
 
   useEffect(() => {
     execute().catch(() => {});
@@ -90,9 +90,7 @@ function Menu() {
           )}
 
           <div style={{ textAlign: "center", marginTop: "1rem" }}>
-            <Button onClick={() => setCurrentPage && setCurrentPage("home")}>
-              Back to Home
-            </Button>
+            <Button onClick={() => navigate("/")}>Back to Home</Button>
           </div>
         </div>
       </main>

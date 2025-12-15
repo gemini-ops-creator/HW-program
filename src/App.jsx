@@ -1,26 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import "./App.css";
-import HomePage from "./pages/Home/HomePage.jsx";
-import Menu from "./pages/Menu/MenuPage.jsx";
-import { AppProvider, useAppContext } from "./context/AppContext.jsx";
+import AppRouter from "./routes/AppRouter.jsx";
+import { initAuthListener } from "./features/auth/authSlice.js";
 
 function App() {
-  return (
-    <AppProvider>
-      <AppContent />
-    </AppProvider>
-  );
-}
+  const dispatch = useDispatch();
 
-function AppContent() {
-  const { currentPage } = useAppContext();
+  useEffect(() => {
+    const unsubscribe = dispatch(initAuthListener());
+    return () => {
+      if (typeof unsubscribe === "function") {
+        unsubscribe();
+      }
+    };
+  }, [dispatch]);
 
-  return (
-    <div className="App">
-      {currentPage === "home" && <HomePage />}
-      {currentPage === "menu" && <Menu />}
-    </div>
-  );
+  return <AppRouter />;
 }
 
 export default App;
