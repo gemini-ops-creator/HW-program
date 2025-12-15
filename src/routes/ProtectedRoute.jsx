@@ -1,11 +1,18 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useSelector } from "react-redux";
+import {
+  selectAuthInitialized,
+  selectAuthLoading,
+  selectUser,
+} from "../features/auth/authSlice.js";
 
 function ProtectedRoute({ children }) {
-  const { user, loading } = useAuth();
+  const user = useSelector(selectUser);
+  const loading = useSelector(selectAuthLoading);
+  const initialized = useSelector(selectAuthInitialized);
 
-  if (loading) {
+  if (!initialized || loading) {
     return null;
   }
 

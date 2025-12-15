@@ -2,18 +2,18 @@ import React from "react";
 import Logo from "../Logo/Logo.jsx";
 import CartButton from "../CartButton/CartButton.jsx";
 import styles from "./Header.module.scss";
-import { useAppContext } from "../../context/AppContext.jsx";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCartCount } from "../../features/cart/cartSlice.js";
 
 function Header() {
-  const { cart, toggleCart } = useAppContext();
+  const navigate = useNavigate();
+  const totalItems = useSelector(selectCartCount);
 
   const navLinkClassName = ({ isActive }) =>
     [styles.navItem, isActive ? styles.activeNavItem : ""]
       .filter(Boolean)
       .join(" ");
-
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <header className={styles.appHeader}>
@@ -38,7 +38,7 @@ function Header() {
         </div>
 
         <div className={styles.cartButtonWrapper}>
-          <CartButton count={totalItems} onClick={toggleCart} />
+          <CartButton count={totalItems} onClick={() => navigate("/order")} />
         </div>
       </nav>
     </header>

@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Button from "../../components/Button/Button.jsx";
 import styles from "./LoginPage.module.css";
-import { useAuth } from "../../context/AuthContext.jsx";
+import {
+  login,
+  selectAuthError,
+  selectAuthStatus,
+} from "../../features/auth/authSlice.js";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { login, error: authError } = useAuth();
+  const dispatch = useDispatch();
+  const authError = useSelector(selectAuthError);
+  const authStatus = useSelector(selectAuthStatus);
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [submitting, setSubmitting] = useState(false);
+  const submitting = authStatus === "loading";
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -19,12 +26,13 @@ function LoginPage() {
 
   const handleSubmit = async event => {
     event.preventDefault();
-    setSubmitting(true);
     try {
-      await login(credentials.email, credentials.password);
+      await dispatch(
+        login({ email: credentials.email, password: credentials.password })
+      ).unwrap();
       navigate("/order");
-    } finally {
-      setSubmitting(false);
+    } catch {
+      // error handled via auth slice state
     }
   };
 
@@ -93,7 +101,9 @@ function LoginPage() {
 
           {authError && (
             <div className={styles.error}>
-              {authError.message || "Failed to log in. Please try again."}
+              {typeof authError === "string"
+                ? authError
+                : authError?.message || "Failed to log in. Please try again."}
             </div>
           )}
         </form>
