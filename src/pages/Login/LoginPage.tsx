@@ -1,30 +1,40 @@
-import React, { useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
-import Button from "../../components/Button/Button.jsx";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import Button from "../../components/Button/Button";
 import styles from "./LoginPage.module.css";
 import {
   login,
   selectAuthError,
   selectAuthStatus,
-} from "../../features/auth/authSlice.js";
+} from "../../features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+
+type Credentials = {
+  email: string;
+  password: string;
+};
 
 function LoginPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const authError = useSelector(selectAuthError);
-  const authStatus = useSelector(selectAuthStatus);
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const dispatch = useAppDispatch();
+  const authError = useAppSelector(selectAuthError);
+  const authStatus = useAppSelector(selectAuthStatus);
+  const [credentials, setCredentials] = useState<Credentials>({
+    email: "",
+    password: "",
+  });
   const submitting = authStatus === "loading";
 
-  const handleChange = event => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setCredentials(prev => ({ ...prev, [name]: value }));
+    const field = name as keyof Credentials;
+    setCredentials(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       await dispatch(
@@ -101,9 +111,7 @@ function LoginPage() {
 
           {authError && (
             <div className={styles.error}>
-              {typeof authError === "string"
-                ? authError
-                : authError?.message || "Failed to log in. Please try again."}
+              {authError || "Failed to log in. Please try again."}
             </div>
           )}
         </form>

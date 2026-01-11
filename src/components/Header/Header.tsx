@@ -1,16 +1,15 @@
-import React from "react";
-import Logo from "../Logo/Logo.jsx";
-import CartButton from "../CartButton/CartButton.jsx";
+import Logo from "../Logo/Logo";
+import CartButton from "../CartButton/CartButton";
 import styles from "./Header.module.scss";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectCartCount } from "../../features/cart/cartSlice.js";
+import { selectCartCount } from "../../features/cart/cartSlice";
+import { useAppSelector } from "../../store/hooks";
 
 function Header() {
   const navigate = useNavigate();
-  const totalItems = useSelector(selectCartCount);
+  const totalItems = useAppSelector(selectCartCount);
 
-  const navLinkClassName = ({ isActive }) =>
+  const navLinkClassName = ({ isActive }: { isActive: boolean }) =>
     [styles.navItem, isActive ? styles.activeNavItem : ""]
       .filter(Boolean)
       .join(" ");

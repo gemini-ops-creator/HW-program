@@ -1,15 +1,15 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
-import Button from "../../components/Button/Button.jsx";
+import { useEffect } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import Button from "../../components/Button/Button";
 import styles from "./OrderPage.module.css";
 import {
   removeItem,
   selectCartItems,
   selectCartTotal,
   updateQuantity,
-} from "../../features/cart/cartSlice.js";
+} from "../../features/cart/cartSlice";
 import {
   selectOrderAddress,
   selectOrderError,
@@ -17,35 +17,44 @@ import {
   selectLastOrderId,
   setAddressField,
   submitOrder,
-} from "../../features/order/orderSlice.js";
+  resetOrderState,
+} from "../../features/order/orderSlice";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 function OrderPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const items = useSelector(selectCartItems);
-  const total = useSelector(selectCartTotal);
-  const address = useSelector(selectOrderAddress);
-  const orderStatus = useSelector(selectOrderStatus);
-  const orderError = useSelector(selectOrderError);
-  const lastOrderId = useSelector(selectLastOrderId);
+  const items = useAppSelector(selectCartItems);
+  const total = useAppSelector(selectCartTotal);
+  const address = useAppSelector(selectOrderAddress);
+  const orderStatus = useAppSelector(selectOrderStatus);
+  const orderError = useAppSelector(selectOrderError);
+  const lastOrderId = useAppSelector(selectLastOrderId);
   const submitting = orderStatus === "loading";
 
-  const handleQuantityInput = (id, value) => {
+  useEffect(() => {
+    return () => {
+      dispatch(resetOrderState());
+    };
+  }, [dispatch]);
+
+  const handleQuantityInput = (id: string, value: string) => {
     const parsed = Number(value);
     if (!Number.isNaN(parsed) && parsed > 0) {
       dispatch(updateQuantity({ id, quantity: parsed }));
     }
   };
 
-  const handleRemove = id => dispatch(removeItem(id));
+  const handleRemove = (id: string) => dispatch(removeItem(id));
 
-  const handleAddressChange = field => event => {
-    dispatch(setAddressField({ field, value: event.target.value }));
-  };
+  const handleAddressChange =
+    (field: "street" | "house") => (event: ChangeEvent<HTMLInputElement>) => {
+      dispatch(setAddressField({ field, value: event.target.value }));
+    };
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       await dispatch(submitOrder({ items, address })).unwrap();
@@ -55,6 +64,7 @@ function OrderPage() {
   };
 
   const isCartEmpty = items.length === 0;
+  const orderSuccess = orderStatus === "succeeded" && lastOrderId;
 
   return (
     <div className={styles.page}>
@@ -65,6 +75,11 @@ function OrderPage() {
         </section>
 
         <section className={styles.orderSection}>
+          {orderSuccess && (
+            <div className={styles.success}>
+              Order placed! ID: {lastOrderId}
+            </div>
+          )}
           {isCartEmpty ? (
             <div className={styles.emptyState}>
               <p>Your cart is empty. Add something tasty to get started.</p>
@@ -167,15 +182,7 @@ function OrderPage() {
 
                 {orderError && (
                   <div className={styles.error}>
-                    {typeof orderError === "string"
-                      ? orderError
-                      : orderError?.message || "Failed to place order"}
-                  </div>
-                )}
-
-                {orderStatus === "succeeded" && lastOrderId && (
-                  <div className={styles.success}>
-                    Order placed! ID: {lastOrderId}
+                    {orderError || "Failed to place order"}
                   </div>
                 )}
               </form>

@@ -1,17 +1,27 @@
-import React from "react";
 import styles from "./Footer.module.scss";
-import Logo from "../Logo/Logo.jsx";
+import Logo from "../Logo/Logo";
 import {
   FooterText,
   FooterLinkTitle,
   FooterLink,
   FooterCredits,
-} from "../Typography/Typography.jsx";
+} from "../Typography/Typography";
 import instagramIcon from "../../assets/icons/instagram.svg";
 import twitterIcon from "../../assets/icons/twitter.svg";
 import youtubeIcon from "../../assets/icons/youtube.svg";
 
-const footerLinksConfig = [
+type FooterLinkItem = {
+  text: string;
+  href?: string;
+  disabled: boolean;
+};
+
+type FooterLinkColumn = {
+  title: string;
+  links: FooterLinkItem[];
+};
+
+const footerLinksConfig: FooterLinkColumn[] = [
   {
     title: "COMPANY",
     links: [
