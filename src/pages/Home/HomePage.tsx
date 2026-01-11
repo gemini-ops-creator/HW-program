@@ -1,7 +1,6 @@
-import React from "react";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
-import Button from "../../components/Button/Button.jsx";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import Button from "../../components/Button/Button";
 import styles from "./HomePage.module.css";
 import { useNavigate } from "react-router-dom";
 

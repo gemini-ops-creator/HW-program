@@ -1,36 +1,50 @@
-import React, { useState, useEffect } from "react";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
-import Card from "../../components/Card/Card.jsx";
-import Button from "../../components/Button/Button.jsx";
+import { useEffect } from "react";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import Card from "../../components/Card/Card";
+import Button from "../../components/Button/Button";
 import styles from "./MenuPage.module.css";
-import { useMealsService } from "../../services/ApiService.js";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  categories,
+  increaseDisplayLimit,
+  loadMeals,
+  selectActiveCategory,
+  selectDisplayLimit,
+  selectMenuError,
+  selectMenuItems,
+  selectMenuStatus,
+  setActiveCategory,
+} from "../../features/menu/menuSlice";
 
 import bgShape from "../../assets/background/BG_Shape.png";
 
 function Menu() {
-  const [displayLimit, setDisplayLimit] = useState(6);
-  const [activeCategory, setActiveCategory] = useState("Dessert");
-
-  const { data: mealsData, loading, error, execute } = useMealsService();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const meals = useAppSelector(selectMenuItems);
+  const status = useAppSelector(selectMenuStatus);
+  const error = useAppSelector(selectMenuError);
+  const displayLimit = useAppSelector(selectDisplayLimit);
+  const activeCategory = useAppSelector(selectActiveCategory);
+  const loading = status === "loading";
+
   useEffect(() => {
-    execute().catch(() => {});
-  }, [execute]);
+    if (status === "idle") {
+      dispatch(loadMeals());
+    }
+  }, [dispatch, status]);
 
   const loadMoreItems = () => {
-    setDisplayLimit(prev => prev + 6);
+    dispatch(increaseDisplayLimit(6));
   };
 
-  const meals = mealsData ?? [];
   const filteredMeals = meals.filter(meal => meal.category === activeCategory);
 
   const displayedMeals = filteredMeals.slice(0, displayLimit);
   const hasMoreItems = displayLimit < filteredMeals.length;
-
-  const categories = ["Dessert", "Dinner", "Breakfast"];
 
   return (
     <div className={styles.menuPageContainer}>
@@ -53,7 +67,7 @@ function Menu() {
                   key={category}
                   variant="secondary"
                   active={activeCategory === category}
-                  onClick={() => setActiveCategory(category)}
+                  onClick={() => dispatch(setActiveCategory(category))}
                 >
                   {category}
                 </Button>
@@ -62,11 +76,7 @@ function Menu() {
           </header>
 
           {loading && <div className={styles.loading}>Loading menu...</div>}
-          {error && (
-            <div className={styles.error}>
-              {error.message || "Failed to load menu items"}
-            </div>
-          )}
+          {error && <div className={styles.error}>{error}</div>}
 
           <div className={styles.menuGrid}>
             {displayedMeals.map(meal => (

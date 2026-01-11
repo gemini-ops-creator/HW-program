@@ -1,6 +1,13 @@
-import React from "react";
+import type { ButtonHTMLAttributes } from "react";
 import clsx from "clsx";
 import styles from "./Button.module.scss";
+
+type ButtonVariant = "primary" | "secondary" | "seeMore";
+
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: ButtonVariant;
+  active?: boolean;
+};
 
 function Button({
   children,
@@ -10,7 +17,7 @@ function Button({
   active = false,
   className,
   ...rest
-}) {
+}: ButtonProps) {
   const buttonClass = clsx(
     styles.button,
     {

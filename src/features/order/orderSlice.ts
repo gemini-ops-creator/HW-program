@@ -1,8 +1,34 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { clearCart } from "../cart/cartSlice.js";
-import { createOrder } from "../../services/orderService.js";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { clearCart } from "../cart/cartSlice";
+import type { CartItem } from "../cart/cartSlice";
+import { createOrder } from "../../services/orderService";
+import type { RootState } from "../../store";
 
-const initialState = {
+type Address = {
+  street: string;
+  house: string;
+};
+
+type OrderStatus = "idle" | "loading" | "succeeded" | "failed";
+
+type OrderState = {
+  address: Address;
+  status: OrderStatus;
+  error: string | null;
+  lastOrderId: string | null;
+};
+
+type SubmitOrderArgs = {
+  items: CartItem[];
+  address: Address;
+};
+
+type SubmitOrderResult = {
+  orderId: string;
+};
+
+const initialState: OrderState = {
   address: {
     street: "",
     house: "",
@@ -12,7 +38,11 @@ const initialState = {
   lastOrderId: null,
 };
 
-export const submitOrder = createAsyncThunk(
+export const submitOrder = createAsyncThunk<
+  SubmitOrderResult,
+  SubmitOrderArgs,
+  { state: RootState; rejectValue: string }
+>(
   "order/submit",
   async ({ items, address }, { dispatch, getState, rejectWithValue }) => {
     if (!items.length) {
@@ -29,7 +59,9 @@ export const submitOrder = createAsyncThunk(
       dispatch(clearCart());
       return { orderId: result.id || result.orderId || "created" };
     } catch (err) {
-      return rejectWithValue(err.message || "Failed to place order");
+      const message =
+        err instanceof Error ? err.message : "Failed to place order";
+      return rejectWithValue(message);
     }
   }
 );
@@ -38,7 +70,10 @@ const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
-    setAddressField: (state, action) => {
+    setAddressField: (
+      state,
+      action: PayloadAction<{ field: keyof Address; value: string }>
+    ) => {
       const { field, value } = action.payload;
       state.address[field] = value;
     },
@@ -58,16 +93,17 @@ const orderSlice = createSlice({
       })
       .addCase(submitOrder.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload || action.error.message;
+        state.error =
+          action.payload ?? action.error.message ?? "Failed to place order";
       });
   },
 });
 
 export const { setAddressField, resetOrderState } = orderSlice.actions;
 
-export const selectOrderAddress = state => state.order.address;
-export const selectOrderStatus = state => state.order.status;
-export const selectOrderError = state => state.order.error;
-export const selectLastOrderId = state => state.order.lastOrderId;
+export const selectOrderAddress = (state: RootState) => state.order.address;
+export const selectOrderStatus = (state: RootState) => state.order.status;
+export const selectOrderError = (state: RootState) => state.order.error;
+export const selectLastOrderId = (state: RootState) => state.order.lastOrderId;
 
 export default orderSlice.reducer;
