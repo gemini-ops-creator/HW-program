@@ -1,40 +1,29 @@
-import type {
-  AnchorHTMLAttributes,
-  ElementType,
-  HTMLAttributes,
-  ReactNode,
-} from "react";
+import type { AnchorHTMLAttributes, ElementType, HTMLAttributes } from "react";
 
 type TypographyVariant = string;
 
 type TextProps = HTMLAttributes<HTMLElement> & {
-  children?: ReactNode;
   variant?: TypographyVariant;
   size?: string;
   weight?: string;
   color?: string;
-  className?: string;
   as?: ElementType;
 };
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 type HeadingProps = HTMLAttributes<HTMLHeadingElement> & {
-  children?: ReactNode;
   level?: HeadingLevel;
   size?: string;
   weight?: string;
   color?: string;
-  className?: string;
   variant?: TypographyVariant;
 };
 
 type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
-  children?: ReactNode;
   size?: string;
   weight?: string;
   color?: string;
-  className?: string;
   variant?: TypographyVariant;
   disabled?: boolean;
 };

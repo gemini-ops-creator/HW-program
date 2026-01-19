@@ -4,7 +4,6 @@ import Button from "../../components/Button/Button";
 import styles from "./HomePage.module.css";
 import { useNavigate } from "react-router-dom";
 
-import bgShape from "../../assets/background/BG_Shape.png";
 import heroImage from "../../assets/background/home.png";
 import trustpilotImage from "../../assets/background/trustpilot.svg";
 
@@ -14,10 +13,7 @@ function HomePage() {
   return (
     <div className={styles.homeContainer}>
       <Header />
-      <main
-        className={styles.heroSection}
-        style={{ backgroundImage: `url(${bgShape})` }}
-      >
+      <main className={styles.heroSection}>
         <div className={styles.heroBanner}>
           <div className={styles.heroLeftSide}>
             <h1 className={styles.mainTitle}>

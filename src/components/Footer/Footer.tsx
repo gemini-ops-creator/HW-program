@@ -63,9 +63,7 @@ function Footer() {
                     key={linkIndex}
                     href={link.href}
                     disabled={link.disabled}
-                    className={`${styles.link} ${
-                      link.disabled ? styles.disabledLink : ""
-                    }`}
+                    className={styles.link}
                   >
                     {link.text}
                   </FooterLink>

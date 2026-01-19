@@ -3,8 +3,8 @@
   height: 220px;
   flex-shrink: 0;
   border-radius: 6px;
-  border: 1px solid rgba(53, 184, 190, 0.15);
-  background: #fff;
+  border: 1px solid var(--brand-accent-border);
+  background: var(--color-surface-strong);
   box-sizing: border-box;
   padding: 24px;
   display: flex;
@@ -36,7 +36,7 @@
 .placeholderImage {
   width: 100%;
   height: 100%;
-  background: #f2f2f2;
+  background: var(--placeholder-bg);
   border-radius: 8px;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .cardTitle {
-  color: #08090a;
+  color: var(--text-primary);
   font-family: Inter, sans-serif;
   font-size: 18px;
   font-weight: 400;
@@ -67,7 +67,7 @@
 }
 
 .cardDescription {
-  color: #546285;
+  color: var(--text-secondary);
   font-family: Inter, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -83,7 +83,7 @@
 }
 
 .cardPrice {
-  color: #35b8be;
+  color: var(--text-accent);
   font-family: Inter, sans-serif;
   font-size: 15px;
   font-weight: 400;
@@ -103,24 +103,25 @@
   width: 40px;
   height: 40px;
   font-size: 16px;
-  border: 1px solid #e2e2e2;
+  border: 1px solid var(--input-border);
   border-radius: 8px;
   text-align: center;
   font-family: Inter, sans-serif;
-  background: #ffffff;
+  background: var(--input-bg);
+  color: var(--input-text);
   outline: none;
 }
 
 .quantityInput:focus {
-  border-color: #35b8be;
+  border-color: var(--text-accent);
 }
 
 .addButton {
   width: 135px;
   height: 48px;
   border-radius: 8px;
-  background: #35b8be;
-  color: #ffffff;
+  background: var(--button-primary-bg);
+  color: var(--button-primary-color);
   font-family: Inter, sans-serif;
   font-size: 16px;
   line-height: 20px;
@@ -130,11 +131,12 @@
 }
 
 .addButton:hover {
-  background: #2da3a9;
+  background: var(--button-primary-bg-hover);
 }
 
 .addButton:disabled {
-  background: #61728333;
+  background: var(--button-disabled-bg);
+  color: var(--button-disabled-color);
   cursor: not-allowed;
 }
 
