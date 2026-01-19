@@ -18,8 +18,6 @@ import {
   setActiveCategory,
 } from "../../features/menu/menuSlice";
 
-import bgShape from "../../assets/background/BG_Shape.png";
-
 function Menu() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -49,10 +47,7 @@ function Menu() {
   return (
     <div className={styles.menuPageContainer}>
       <Header />
-      <main
-        className={styles.menuSection}
-        style={{ backgroundImage: `url(${bgShape})` }}
-      >
+      <main className={styles.menuSection}>
         <div className={styles.menuContainer}>
           <header className={styles.menuHeader}>
             <h1>Browse our menu</h1>
@@ -80,14 +75,7 @@ function Menu() {
 
           <div className={styles.menuGrid}>
             {displayedMeals.map(meal => (
-              <Card
-                key={meal.id}
-                id={meal.id}
-                name={meal.meal}
-                description={meal.instructions}
-                image={meal.img}
-                price={meal.price}
-              />
+              <Card key={meal.id} {...meal} />
             ))}
           </div>
 

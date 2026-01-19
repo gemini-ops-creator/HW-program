@@ -2,7 +2,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #f3fbff 0%, #f8fbfc 100%);
+  background: var(--page-gradient);
 }
 
 .main {
@@ -22,7 +22,7 @@
 }
 
 .title {
-  color: #35b8be;
+  color: var(--text-accent);
   text-align: center;
   font-family: "Inter", sans-serif;
   font-size: 50px;
@@ -50,10 +50,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #ffffff;
+  background: var(--color-surface-strong);
   border-radius: 6px;
   padding: 26px 24px;
-  border: 1px solid rgba(53, 184, 190, 0.15);
+  border: 1px solid var(--brand-accent-border);
   min-height: 200px;
   width: 1180px;
 }
@@ -69,11 +69,11 @@
   height: 120px;
   border-radius: 10px;
   overflow: hidden;
-  background: #eef7fb;
+  background: var(--color-surface-alt);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 0 1px #e8f3f7;
+  box-shadow: inset 0 0 0 1px var(--placeholder-border);
 }
 
 .itemImage {
@@ -85,13 +85,13 @@
 .itemPlaceholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #e2f3f7, #d2e8f0);
+  background: var(--placeholder-gradient);
 }
 
 .itemName {
   margin: 0;
   width: 600px;
-  color: #08090a;
+  color: var(--text-primary);
   font-family: "Inter", sans-serif;
   font-size: 18px;
   font-style: normal;
@@ -111,7 +111,7 @@
 
 .itemPrice {
   width: 86px;
-  color: #35b8be;
+  color: var(--text-accent);
   font-family: "Inter", sans-serif;
   font-size: 15px;
   font-style: normal;
@@ -123,12 +123,12 @@
   width: 60px;
   height: 45px;
   border-radius: 6px;
-  border: 1px solid #ddd;
-  background: #fafafa;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
   text-align: center;
   font-size: 16px;
   font-family: "Inter", sans-serif;
-  color: #08090a;
+  color: var(--input-text);
   line-height: 45px;
   padding: 0;
   outline: none;
@@ -138,8 +138,8 @@
   width: 60px;
   height: 45px;
   border: none;
-  background: #35b8be;
-  color: #ffffff;
+  background: var(--button-primary-bg);
+  color: var(--button-primary-color);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -177,7 +177,7 @@
 }
 
 .label {
-  color: #08090a;
+  color: var(--text-primary);
   font-family: "Inter", sans-serif;
   font-size: 18px;
   font-style: normal;
@@ -194,11 +194,11 @@
   height: 45px;
   padding: 10px 12px;
   border-radius: 6px;
-  border: 1px solid #ddd;
-  background: #fafafa;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
   font-size: 16px;
   font-family: "Inter", sans-serif;
-  color: #08090a;
+  color: var(--input-text);
 }
 
 .totalRow {
@@ -207,12 +207,12 @@
   gap: 12px;
   align-items: center;
   padding-top: 12px;
-  border-top: 1px solid #e1eef3;
+  border-top: 1px solid var(--color-border-soft);
   font-weight: 600;
 }
 
 .totalLabel {
-  color: #08090a;
+  color: var(--text-primary);
   font-family: "Inter", sans-serif;
   font-size: 18px;
   font-style: normal;
@@ -226,7 +226,7 @@
 
 .totalValue {
   width: 86px;
-  color: #35b8be;
+  color: var(--text-accent);
   font-family: "Inter", sans-serif;
   font-size: 15px;
   font-style: normal;
@@ -236,24 +236,24 @@
 }
 
 .error {
-  color: #c94a4a;
-  background: #fff4f4;
-  border: 1px solid #f0cccc;
+  color: var(--error-text);
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
   border-radius: 8px;
   padding: 10px 12px;
 }
 
 .success {
-  color: #1d8b5f;
-  background: #f0fbf4;
-  border: 1px solid #c8e8d6;
+  color: var(--success-text);
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
   border-radius: 8px;
   padding: 10px 12px;
 }
 
 .emptyState {
-  background: #fff;
-  border: 1px solid #e9f1f5;
+  background: var(--color-surface-strong);
+  border: 1px solid var(--color-border-soft);
   border-radius: 12px;
   padding: 24px;
   text-align: center;

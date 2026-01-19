@@ -4,7 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App";
-import { store } from "./store/index";
+import { store } from "./store";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const rootElement = document.getElementById("root");
 
@@ -14,10 +15,12 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <ThemeProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </ThemeProvider>
   </StrictMode>
 );

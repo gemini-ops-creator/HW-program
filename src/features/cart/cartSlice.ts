@@ -10,14 +10,6 @@ export type CartItem = {
   quantity: number;
 };
 
-type CartItemInput = {
-  id: string;
-  name: string;
-  price?: number;
-  image?: string;
-  quantity?: number;
-};
-
 type CartState = {
   items: CartItem[];
 };
@@ -30,8 +22,8 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<CartItemInput>) => {
-      const { id, name, price = 0, image, quantity = 1 } = action.payload;
+    addItem: (state, action: PayloadAction<CartItem>) => {
+      const { id, name, price, image, quantity } = action.payload;
       const existing = state.items.find(item => item.id === id);
       if (existing) {
         existing.quantity += quantity;
