@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Button from "../../components/Button/Button.jsx";
+import FormField from "../../components/FormField/FormField.jsx";
 import styles from "./LoginPage.module.css";
-import { useAuth } from "../../context/AuthContext.jsx";
+import { login } from "../../store/authSlice.js";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { login, error: authError } = useAuth();
+  const dispatch = useDispatch();
+  const authError = useSelector(state => state.auth.error);
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [submitting, setSubmitting] = useState(false);
 
@@ -21,8 +24,12 @@ function LoginPage() {
     event.preventDefault();
     setSubmitting(true);
     try {
-      await login(credentials.email, credentials.password);
+      await dispatch(
+        login({ email: credentials.email, password: credentials.password })
+      ).unwrap();
       navigate("/order");
+    } catch {
+      // error already in state
     } finally {
       setSubmitting(false);
     }
@@ -40,42 +47,35 @@ function LoginPage() {
         <h1 className={styles.title}>Log in</h1>
 
         <form className={styles.formCard} onSubmit={handleSubmit}>
-          <div className={styles.fieldRow}>
-            <label htmlFor="email" className={styles.label}>
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              value={credentials.email}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="Enter your email"
-              required
-            />
-          </div>
+          <FormField
+            id="email"
+            name="email"
+            label="Email"
+            type="email"
+            autoComplete="email"
+            value={credentials.email}
+            onChange={handleChange}
+            placeholder="Enter your email"
+            required
+            labelClassName={styles.label}
+            inputClassName={styles.input}
+            wrapperClassName={styles.fieldRow}
+          />
 
-          <div className={styles.fieldRow}>
-            <label
-              htmlFor="password"
-              className={`${styles.label} ${styles.passwordLabel}`}
-            >
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              value={credentials.password}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="Enter your password"
-              required
-            />
-          </div>
+          <FormField
+            id="password"
+            name="password"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            value={credentials.password}
+            onChange={handleChange}
+            placeholder="Enter your password"
+            required
+            labelClassName={`${styles.label} ${styles.passwordLabel}`}
+            inputClassName={styles.input}
+            wrapperClassName={styles.fieldRow}
+          />
 
           <div className={styles.actions}>
             <Button type="submit" disabled={submitting}>
@@ -93,7 +93,7 @@ function LoginPage() {
 
           {authError && (
             <div className={styles.error}>
-              {authError.message || "Failed to log in. Please try again."}
+              {authError || "Failed to log in. Please try again."}
             </div>
           )}
         </form>

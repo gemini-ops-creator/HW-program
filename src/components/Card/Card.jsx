@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styles from "./Card.module.css";
-import { useAppContext } from "../../context/AppContext.jsx";
+import { addToCart } from "../../store/cartSlice.js";
 
 function Card({ id, name, description, image, price }) {
-  const { addToCart } = useAppContext();
+  const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
   const handleAdd = () => {
-    addToCart({ id, name, price: Number(price) || 0, image }, quantity);
+    dispatch(
+      addToCart({
+        item: { id, name, price: Number(price) || 0, image },
+        quantity,
+      })
+    );
   };
 
   const handleQuantityChange = e => {

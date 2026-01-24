@@ -1,9 +1,9 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext.jsx";
+import { Navigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-function ProtectedRoute({ children }) {
-  const { user, loading } = useAuth();
+function ProtectedRoute() {
+  const { user, loading } = useSelector(state => state.auth);
 
   if (loading) {
     return null;
@@ -13,7 +13,7 @@ function ProtectedRoute({ children }) {
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  return <Outlet />;
 }
 
 export default ProtectedRoute;

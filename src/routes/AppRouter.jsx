@@ -12,14 +12,9 @@ function AppRouter() {
       <Route path="/" element={<HomePage />} />
       <Route path="/menu" element={<MenuPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route
-        path="/order"
-        element={
-          <ProtectedRoute>
-            <OrderPage />
-          </ProtectedRoute>
-        }
-      />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/order" element={<OrderPage />} />
+      </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

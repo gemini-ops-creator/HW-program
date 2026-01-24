@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
-import { AppProvider } from "./context/AppContext.jsx";
-import { AuthProvider } from "./context/AuthContext.jsx";
+import { useDispatch } from "react-redux";
 import AppRouter from "./routes/AppRouter.jsx";
+import { listenToAuthChanges } from "./store/authSlice.js";
 
 function App() {
-  return (
-    <AuthProvider>
-      <AppProvider>
-        <AppRouter />
-      </AppProvider>
-    </AuthProvider>
-  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const unsubscribe = dispatch(listenToAuthChanges());
+    return () => {
+      if (typeof unsubscribe === "function") {
+        unsubscribe();
+      }
+    };
+  }, [dispatch]);
+
+  return <AppRouter />;
 }
 
 export default App;

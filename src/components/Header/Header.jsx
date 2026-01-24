@@ -1,12 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Logo from "../Logo/Logo.jsx";
 import CartButton from "../CartButton/CartButton.jsx";
 import styles from "./Header.module.scss";
-import { useAppContext } from "../../context/AppContext.jsx";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 function Header() {
-  const { cart, toggleCart } = useAppContext();
+  const cart = useSelector(state => state.cart.items);
+  const navigate = useNavigate();
 
   const navLinkClassName = ({ isActive }) =>
     [styles.navItem, isActive ? styles.activeNavItem : ""]
@@ -38,7 +39,7 @@ function Header() {
         </div>
 
         <div className={styles.cartButtonWrapper}>
-          <CartButton count={totalItems} onClick={toggleCart} />
+          <CartButton count={totalItems} onClick={() => navigate("/order")} />
         </div>
       </nav>
     </header>
