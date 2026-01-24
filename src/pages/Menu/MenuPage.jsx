@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import Card from "../../components/Card/Card.jsx";
 import Button from "../../components/Button/Button.jsx";
 import styles from "./MenuPage.module.css";
-import { useMealsService } from "../../services/ApiService.js";
-import { useAppContext } from "../../context/AppContext.jsx";
+import { useNavigate } from "react-router-dom";
+import { fetchMeals } from "../../store/menuSlice.js";
 
 import bgShape from "../../assets/background/BG_Shape.png";
 
@@ -13,12 +14,13 @@ function Menu() {
   const [displayLimit, setDisplayLimit] = useState(6);
   const [activeCategory, setActiveCategory] = useState("Dessert");
 
-  const { setCurrentPage } = useAppContext();
-  const { data: mealsData, loading, error, execute } = useMealsService();
+  const dispatch = useDispatch();
+  const { items: mealsData, loading, error } = useSelector(state => state.menu);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    execute().catch(() => {});
-  }, [execute]);
+    dispatch(fetchMeals());
+  }, [dispatch]);
 
   const loadMoreItems = () => {
     setDisplayLimit(prev => prev + 6);
@@ -64,7 +66,7 @@ function Menu() {
           {loading && <div className={styles.loading}>Loading menu...</div>}
           {error && (
             <div className={styles.error}>
-              {error.message || "Failed to load menu items"}
+              {error || "Failed to load menu items"}
             </div>
           )}
 
@@ -90,9 +92,7 @@ function Menu() {
           )}
 
           <div style={{ textAlign: "center", marginTop: "1rem" }}>
-            <Button onClick={() => setCurrentPage && setCurrentPage("home")}>
-              Back to Home
-            </Button>
+            <Button onClick={() => navigate("/")}>Back to Home</Button>
           </div>
         </div>
       </main>

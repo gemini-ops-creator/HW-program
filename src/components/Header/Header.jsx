@@ -1,46 +1,45 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Logo from "../Logo/Logo.jsx";
 import CartButton from "../CartButton/CartButton.jsx";
 import styles from "./Header.module.scss";
-import { useAppContext } from "../../context/AppContext.jsx";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 function Header() {
-  const { cart, toggleCart, setCurrentPage } = useAppContext();
+  const cart = useSelector(state => state.cart.items);
+  const navigate = useNavigate();
+
+  const navLinkClassName = ({ isActive }) =>
+    [styles.navItem, isActive ? styles.activeNavItem : ""]
+      .filter(Boolean)
+      .join(" ");
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <header className={styles.appHeader}>
-      <div
-        className={styles.logoLink}
-        aria-label="Homepage"
-        style={{ cursor: "pointer" }}
-      >
+      <Link className={styles.logoLink} aria-label="Homepage" to="/">
         <Logo alt="Company Logo" className={styles.logoIcon} />
-      </div>
+      </Link>
 
       <nav className={styles.navContainer}>
         <div className={styles.navLinks}>
-          <span className={styles.navItem} style={{ cursor: "default" }}>
+          <NavLink to="/" end className={navLinkClassName}>
             Home
-          </span>
-          <span
-            className={styles.navItem}
-            style={{ cursor: "pointer" }}
-            onClick={() => setCurrentPage && setCurrentPage("menu")}
-          >
+          </NavLink>
+          <NavLink to="/menu" className={navLinkClassName}>
             Menu
-          </span>
+          </NavLink>
           <span className={styles.navItem} style={{ cursor: "default" }}>
             Company
           </span>
-          <span className={styles.navItem} style={{ cursor: "default" }}>
+          <NavLink to="/login" className={navLinkClassName}>
             Login
-          </span>
+          </NavLink>
         </div>
 
         <div className={styles.cartButtonWrapper}>
-          <CartButton count={totalItems} onClick={toggleCart} />
+          <CartButton count={totalItems} onClick={() => navigate("/order")} />
         </div>
       </nav>
     </header>
