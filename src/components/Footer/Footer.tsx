@@ -1,36 +1,63 @@
-import React from "react";
 import styles from "./Footer.module.scss";
-import Logo from "../Logo/Logo.jsx";
+import Logo from "../Logo/Logo";
 import {
   FooterText,
   FooterLinkTitle,
   FooterLink,
   FooterCredits,
-} from "../Typography/Typography.jsx";
+} from "../Typography/Typography";
+import { useLanguage } from "../../context/LanguageContext";
+import { commonTranslations } from "../../locales/common";
 import instagramIcon from "../../assets/icons/instagram.svg";
 import twitterIcon from "../../assets/icons/twitter.svg";
 import youtubeIcon from "../../assets/icons/youtube.svg";
 
-const footerLinksConfig = [
-  {
-    title: "COMPANY",
-    links: [
-      { text: "About Us", disabled: true },
-      { text: "Careers", disabled: true },
-      { text: "Contact", disabled: true },
-    ],
-  },
-  {
-    title: "TEMPLATE",
-    links: [
-      { text: "Style Guide", href: "https://www.google.com", disabled: false },
-      { text: "Changelog", href: "https://www.google.com", disabled: false },
-      { text: "License", href: "https://www.google.com", disabled: false },
-    ],
-  },
-];
+type FooterLinkItem = {
+  text: string;
+  href?: string;
+  disabled: boolean;
+};
+
+type FooterLinkColumn = {
+  title: string;
+  links: FooterLinkItem[];
+};
 
 function Footer() {
+  const { language } = useLanguage();
+  const content = commonTranslations[language];
+
+  const footerLinksConfig: FooterLinkColumn[] = [
+    {
+      title: content.footer.columns.company,
+      links: [
+        { text: content.footer.links.about, disabled: true },
+        { text: content.footer.links.careers, disabled: true },
+        { text: content.footer.links.contact, disabled: true },
+      ],
+    },
+    {
+      title: content.footer.columns.template,
+      links: [
+        {
+          text: content.footer.links.style,
+          href: "https://www.google.com",
+          disabled: false,
+        },
+        {
+          text: content.footer.links.changelog,
+          href: "https://www.google.com",
+          disabled: false,
+        },
+        {
+          text: content.footer.links.license,
+          href: "https://www.google.com",
+          disabled: false,
+        },
+      ],
+    },
+  ];
+
   return (
     <footer className={styles.footer}>
       <div className={styles.wrapper}>
@@ -38,7 +65,7 @@ function Footer() {
           <div className={styles.logoSection}>
             <Logo alt="Restaurant Logo" className={styles.logo} />
             <FooterText className={styles.footerText}>
-              Takeaway & Delivery template for small - medium businesses.
+              {content.footer.description}
             </FooterText>
           </div>
 
@@ -69,9 +96,9 @@ function Footer() {
 
         <div className={styles.bottomContent}>
           <FooterCredits className={styles.builtWith}>
-            <span>Built by</span>
+            <span>{content.footer.credits.builtBy}</span>
             <span className={styles.highlightedText}>Flowbase</span>
-            <span>· Powered by</span>
+            <span>· {content.footer.credits.poweredBy}</span>
             <span className={styles.highlightedText}>Webflow</span>
           </FooterCredits>
           <div className={styles.socialIcons}>

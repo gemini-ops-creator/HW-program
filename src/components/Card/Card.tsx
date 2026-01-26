@@ -1,11 +1,20 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import type { ChangeEvent } from "react";
+import { useState } from "react";
 import styles from "./Card.module.css";
-import { addToCart } from "../../store/cartSlice.js";
+import { addToCart } from "../../store/cartSlice";
+import { useAppDispatch } from "../../store/hooks";
 
-function Card({ id, name, description, image, price }) {
-  const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(1);
+type CardProps = {
+  id: string;
+  name: string;
+  description: string;
+  image?: string;
+  price: number | string;
+};
+
+function Card({ id, name, description, image, price }: CardProps) {
+  const dispatch = useAppDispatch();
+  const [quantity, setQuantity] = useState<number>(1);
 
   const handleAdd = () => {
     dispatch(
@@ -16,7 +25,7 @@ function Card({ id, name, description, image, price }) {
     );
   };
 
-  const handleQuantityChange = e => {
+  const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value) || 1;
     if (value >= 1) {
       setQuantity(value);

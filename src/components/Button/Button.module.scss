@@ -3,8 +3,8 @@
   height: 52px;
   border-radius: 6px;
   border: none;
-  background-color: #35b8be;
-  color: #ffffff;
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
   flex-shrink: 0;
   font-weight: 400;
   font-size: 16px;
@@ -18,57 +18,57 @@
 }
 
 .button:hover {
-  background-color: #2da1a7;
+  background-color: var(--button-primary-bg-hover);
 }
 
 .button:disabled {
-  background-color: #61728333;
-  color: #ffffff;
+  background-color: var(--button-disabled-bg);
+  color: var(--button-disabled-color);
   cursor: not-allowed;
 }
 
 .button:disabled:hover {
-  background-color: #61728333;
+  background-color: var(--button-disabled-bg);
 }
 
 .button:focus {
-  outline: 2px solid #35b8be;
+  outline: 2px solid var(--brand-accent);
   outline-offset: 2px;
 }
 
 .secondary {
-  background-color: rgba(97, 114, 131, 0.05);
-  color: #222222;
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
 }
 
 .secondary:hover:not(:disabled) {
-  background-color: #2da1a7;
-  color: #ffffff;
+  background-color: var(--button-secondary-hover-bg);
+  color: var(--button-secondary-hover-text);
 }
 
 .secondary.active {
-  background-color: #35b8be;
-  color: #ffffff;
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
 }
 
 .secondary:disabled {
-  background-color: rgba(97, 114, 131, 0.05);
-  color: #222222;
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
   cursor: not-allowed;
 }
 
 .secondary.active:disabled {
-  background-color: #35b8be;
-  color: #ffffff;
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
   cursor: not-allowed;
 }
 
 .seeMore {
-  background-color: #35b8be;
-  color: #ffffff;
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
 }
 
 .seeMore:hover {
-  background-color: #2da1a7;
-  color: #ffffff;
+  background-color: var(--button-primary-bg-hover);
+  color: var(--button-primary-color);
 }

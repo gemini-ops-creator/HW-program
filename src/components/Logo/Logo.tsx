@@ -1,7 +1,14 @@
-import React from "react";
+import type { ImgHTMLAttributes } from "react";
 import logoSvg from "../../assets/icons/logo.svg";
 
-function Logo({ className, alt = "Logo", loading = "lazy", ...rest }) {
+type LogoProps = ImgHTMLAttributes<HTMLImageElement>;
+
+function Logo({
+  className,
+  alt = "Logo",
+  loading = "lazy",
+  ...rest
+}: LogoProps) {
   return (
     <img
       src={logoSvg}

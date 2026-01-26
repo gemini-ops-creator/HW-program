@@ -1,9 +1,8 @@
-import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../store/hooks";
 
 function ProtectedRoute() {
-  const { user, loading } = useSelector(state => state.auth);
+  const { user, loading } = useAppSelector(state => state.auth);
 
   if (loading) {
     return null;

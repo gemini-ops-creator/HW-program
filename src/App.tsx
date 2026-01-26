@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./App.css";
-import { useDispatch } from "react-redux";
-import AppRouter from "./routes/AppRouter.jsx";
-import { listenToAuthChanges } from "./store/authSlice.js";
+import AppRouter from "./routes/AppRouter";
+import { listenToAuthChanges } from "./store/authSlice";
+import { useAppDispatch } from "./store/hooks";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const unsubscribe = dispatch(listenToAuthChanges());
