@@ -1,4 +1,12 @@
-import React from "react";
+import type { InputHTMLAttributes } from "react";
+
+type FormFieldProps = {
+  id: string;
+  label: string;
+  labelClassName?: string;
+  inputClassName?: string;
+  wrapperClassName?: string;
+} & InputHTMLAttributes<HTMLInputElement>;
 
 function FormField({
   id,
@@ -13,7 +21,8 @@ function FormField({
   labelClassName,
   inputClassName,
   wrapperClassName,
-}) {
+  ...rest
+}: FormFieldProps) {
   return (
     <div className={wrapperClassName}>
       <label htmlFor={id} className={labelClassName}>
@@ -29,6 +38,7 @@ function FormField({
         className={inputClassName}
         placeholder={placeholder}
         required={required}
+        {...rest}
       />
     </div>
   );

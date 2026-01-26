@@ -1,10 +1,9 @@
-import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import HomePage from "../pages/Home/HomePage.jsx";
-import MenuPage from "../pages/Menu/MenuPage.jsx";
-import LoginPage from "../pages/Login/LoginPage.jsx";
-import OrderPage from "../pages/Order/OrderPage.jsx";
-import ProtectedRoute from "./ProtectedRoute.jsx";
+import HomePage from "../pages/Home/HomePage";
+import MenuPage from "../pages/Menu/MenuPage";
+import LoginPage from "../pages/Login/LoginPage";
+import OrderPage from "../pages/Order/OrderPage";
+import ProtectedRoute from "./ProtectedRoute";
 
 function AppRouter() {
   return (

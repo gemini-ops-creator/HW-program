@@ -1,6 +1,51 @@
-import React from "react";
+import type {
+  AnchorHTMLAttributes,
+  ElementType,
+  HTMLAttributes,
+  ReactNode,
+} from "react";
 
-const getTypographyClasses = (variant, size, weight, color, className) => {
+type TypographyVariant = string;
+
+type TextProps = HTMLAttributes<HTMLElement> & {
+  children?: ReactNode;
+  variant?: TypographyVariant;
+  size?: string;
+  weight?: string;
+  color?: string;
+  className?: string;
+  as?: ElementType;
+};
+
+type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+
+type HeadingProps = HTMLAttributes<HTMLHeadingElement> & {
+  children?: ReactNode;
+  level?: HeadingLevel;
+  size?: string;
+  weight?: string;
+  color?: string;
+  className?: string;
+  variant?: TypographyVariant;
+};
+
+type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
+  children?: ReactNode;
+  size?: string;
+  weight?: string;
+  color?: string;
+  className?: string;
+  variant?: TypographyVariant;
+  disabled?: boolean;
+};
+
+const getTypographyClasses = (
+  variant?: TypographyVariant,
+  size?: string,
+  weight?: string,
+  color?: string,
+  className?: string
+) => {
   const classes = [];
 
   if (variant) classes.push(variant);
@@ -21,7 +66,7 @@ export function Text({
   className = "",
   as = "p",
   ...props
-}) {
+}: TextProps) {
   const Component = as;
   const classes = getTypographyClasses(variant, size, weight, color, className);
 
@@ -41,8 +86,8 @@ export function Heading({
   className = "",
   variant,
   ...props
-}) {
-  const Component = `h${level}`;
+}: HeadingProps) {
+  const Component = `h${level}` as ElementType;
   const classes = getTypographyClasses(variant, size, weight, color, className);
 
   return (
@@ -62,12 +107,13 @@ export function Link({
   variant,
   disabled = false,
   ...props
-}) {
+}: LinkProps) {
   const classes = getTypographyClasses(variant, size, weight, color, className);
 
   if (disabled) {
+    const { onClick: _onClick, ...rest } = props;
     return (
-      <span className={classes} style={{ cursor: "default" }} {...props}>
+      <span className={classes} style={{ cursor: "default" }} {...rest}>
         {children}
       </span>
     );
@@ -86,7 +132,7 @@ export function Link({
   );
 }
 
-export function FooterText({ children, className = "", ...props }) {
+export function FooterText({ children, className = "", ...props }: TextProps) {
   return (
     <Text variant="footer-text" className={className} {...props}>
       {children}
@@ -94,7 +140,11 @@ export function FooterText({ children, className = "", ...props }) {
   );
 }
 
-export function FooterLinkTitle({ children, className = "", ...props }) {
+export function FooterLinkTitle({
+  children,
+  className = "",
+  ...props
+}: HeadingProps) {
   return (
     <Heading
       level={4}
@@ -112,7 +162,7 @@ export function FooterLink({
   disabled = false,
   className = "",
   ...props
-}) {
+}: LinkProps) {
   return (
     <Link
       variant="footer-link"
@@ -125,7 +175,11 @@ export function FooterLink({
   );
 }
 
-export function FooterCredits({ children, className = "", ...props }) {
+export function FooterCredits({
+  children,
+  className = "",
+  ...props
+}: TextProps) {
   return (
     <Text variant="footer-credits" className={className} as="div" {...props}>
       {children}

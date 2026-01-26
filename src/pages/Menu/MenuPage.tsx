@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
-import Card from "../../components/Card/Card.jsx";
-import Button from "../../components/Button/Button.jsx";
+import { useEffect, useState } from "react";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import Card from "../../components/Card/Card";
+import Button from "../../components/Button/Button";
 import styles from "./MenuPage.module.css";
 import { useNavigate } from "react-router-dom";
-import { fetchMeals } from "../../store/menuSlice.js";
-
-import bgShape from "../../assets/background/BG_Shape.png";
+import { fetchMeals } from "../../store/menuSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 function Menu() {
   const [displayLimit, setDisplayLimit] = useState(6);
   const [activeCategory, setActiveCategory] = useState("Dessert");
 
-  const dispatch = useDispatch();
-  const { items: mealsData, loading, error } = useSelector(state => state.menu);
+  const dispatch = useAppDispatch();
+  const {
+    items: mealsData,
+    loading,
+    error,
+  } = useAppSelector(state => state.menu);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,10 +39,7 @@ function Menu() {
   return (
     <div className={styles.menuPageContainer}>
       <Header />
-      <main
-        className={styles.menuSection}
-        style={{ backgroundImage: `url(${bgShape})` }}
-      >
+      <main className={styles.menuSection}>
         <div className={styles.menuContainer}>
           <header className={styles.menuHeader}>
             <h1>Browse our menu</h1>

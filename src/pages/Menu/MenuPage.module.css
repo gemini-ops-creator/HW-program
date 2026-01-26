@@ -5,9 +5,12 @@
 }
 
 .menuSection {
+  background-image: var(--menu-bg-image);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: var(--menu-bg-tint);
+  background-blend-mode: multiply;
   flex: 1;
   display: flex;
   align-items: center;
@@ -27,7 +30,7 @@
 }
 
 .menuHeader h1 {
-  color: #35b8be;
+  color: var(--text-accent);
   text-align: center;
   font-family: "Inter", sans-serif;
   font-size: 50px;
@@ -49,7 +52,7 @@
 .menuSubtitle {
   width: 466px;
   height: 54px;
-  color: #546285;
+  color: var(--text-secondary);
   text-align: center;
   font-family: "Inter", sans-serif;
   font-size: 16px;
@@ -62,7 +65,7 @@
 }
 
 .menuSubtitle .phone {
-  color: #35b8be;
+  color: var(--text-accent);
   font-family: "Inter", sans-serif;
   font-size: 16px;
   font-style: normal;
@@ -97,17 +100,18 @@
 .loading {
   text-align: center;
   font-size: 1.2rem;
-  color: #666;
+  color: var(--text-secondary);
   margin: 2rem 0;
 }
 
 .error {
   text-align: center;
   font-size: 1.1rem;
-  color: #d32f2f;
+  color: var(--error-text);
   margin: 2rem 0;
   padding: 1rem;
-  background-color: #ffebee;
+  background-color: var(--error-bg);
+  border: 1px solid var(--error-border);
   border-radius: 8px;
 }
 

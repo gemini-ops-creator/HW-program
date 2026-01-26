@@ -1,22 +1,19 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import type { ChangeEvent, FormEvent } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
-import Button from "../../components/Button/Button.jsx";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import Button from "../../components/Button/Button";
 import styles from "./OrderPage.module.css";
-import {
-  clearCart,
-  removeItem,
-  updateQuantity,
-} from "../../store/cartSlice.js";
+import { clearCart, removeItem, updateQuantity } from "../../store/cartSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 function OrderPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const items = useSelector(state => state.cart.items);
+  const items = useAppSelector(state => state.cart.items);
   const [address, setAddress] = useState({ street: "", house: "" });
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const total = items.reduce(
     (sum, item) => sum + (Number(item.price) || 0) * item.quantity,
@@ -29,7 +26,7 @@ function OrderPage() {
     }
   };
 
-  const handleQuantityInput = (id, value) => {
+  const handleQuantityInput = (id: string, value: string) => {
     const parsed = Number(value);
     if (!Number.isNaN(parsed) && parsed > 0) {
       resetFeedback();
@@ -37,17 +34,20 @@ function OrderPage() {
     }
   };
 
-  const handleRemove = id => {
+  const handleRemove = (id: string) => {
     resetFeedback();
     dispatch(removeItem(id));
   };
 
-  const handleAddressChange = field => event => {
+  const handleAddressChange = (
+    field: "street" | "house",
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     resetFeedback();
     setAddress(prev => ({ ...prev, [field]: event.target.value }));
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (items.length === 0) {
       setError("Your cart is empty. Add items before ordering.");
@@ -140,10 +140,10 @@ function OrderPage() {
                     name="street"
                     type="text"
                     value={address.street}
-                    onChange={handleAddressChange("street")}
+                    onChange={event => handleAddressChange("street", event)}
                     className={styles.input}
                     placeholder="Enter street"
-                    minLength="2"
+                    minLength={2}
                     required
                   />
                 </div>
@@ -156,10 +156,10 @@ function OrderPage() {
                     name="house"
                     type="text"
                     value={address.house}
-                    onChange={handleAddressChange("house")}
+                    onChange={event => handleAddressChange("house", event)}
                     className={styles.input}
                     placeholder="Enter house/apartment"
-                    minLength="1"
+                    minLength={1}
                     required
                   />
                 </div>

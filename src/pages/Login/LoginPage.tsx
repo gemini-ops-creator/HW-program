@@ -1,26 +1,30 @@
-import React, { useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
-import Button from "../../components/Button/Button.jsx";
-import FormField from "../../components/FormField/FormField.jsx";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import Button from "../../components/Button/Button";
+import FormField from "../../components/FormField/FormField";
 import styles from "./LoginPage.module.css";
-import { login } from "../../store/authSlice.js";
+import { login } from "../../store/authSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const authError = useSelector(state => state.auth.error);
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const dispatch = useAppDispatch();
+  const authError = useAppSelector(state => state.auth.error);
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+  });
   const [submitting, setSubmitting] = useState(false);
 
-  const handleChange = event => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setCredentials(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitting(true);
     try {
